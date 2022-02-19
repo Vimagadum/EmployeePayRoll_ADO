@@ -154,6 +154,49 @@ namespace Employee_PayRoll__
                 connection.Close();
             }
         }
+        public void UsingDatabaseFunction(string sex)
+        {
+            try
+            {
+                DataBaseFunctions df = new DataBaseFunctions();
 
+                connection = new SqlConnection(connectionString);
+                string queryDb = sex;
+
+                //define SqlCommand Object
+                SqlCommand cmd = new SqlCommand(queryDb, connection);
+                connection.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        df.gender = Convert.ToString(dr["Gender"]);
+                        df.count = Convert.ToInt32(dr["TotalCount"]);
+                        df.totalSum = Convert.ToDecimal(dr["TotalSum"]);
+                        df.avg = Convert.ToDecimal(dr["AverageValue"]);
+                        df.min = Convert.ToDecimal(dr["MinValue"]);
+                        df.max = Convert.ToDecimal(dr["MaxValue"]);
+                        Console.WriteLine("Gender: {0}, TotalCount: {1}, TotalSalary: {2}, AvgSalary:  {3}, MinSalary:  {4}, MinSalary:  {5}", df.gender, df.count, df.totalSum, df.avg, df.min, df.max);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Rows doesn't exist!");
+                }
+                dr.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                connection.Close();
+            }
+            finally
+            {
+                connection.Close();
+            }
+            Console.WriteLine();
+        }
     }
 }
