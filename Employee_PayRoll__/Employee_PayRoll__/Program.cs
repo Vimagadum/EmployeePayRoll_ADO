@@ -14,6 +14,7 @@ namespace Employee_PayRoll__
             EmployeeRepo repo = new EmployeeRepo();
             repo.GetAllEmployee();
             repo.UpdateEmployeeSalary();
+            repo.GetEmployeeDetailsByDate();
             Console.ReadLine();
         }
     }
