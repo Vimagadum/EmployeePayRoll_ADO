@@ -69,5 +69,52 @@ namespace Employee_PayRoll__
                 connection.Close();
             }
         }
+        public int UpdateEmployeeSalary()
+        {
+            EmployeePayRoll emp = new EmployeePayRoll();
+            emp.employeeName = "roshni";
+            emp.basicPay = 300000;
+            emp.department = "BackEnd";
+            emp.address = "Belgaum";
+            emp.phoneNumber = "912345678";
+            emp.deductions = 5000;
+            emp.taxablePay = 15000;
+            emp.tax = 5000;
+            emp.netPay = 275000;
+            try
+            {
+                using (connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("StoreUpdateSalary", connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Name", emp.employeeName);
+                    sqlCommand.Parameters.AddWithValue("@BasicPay", emp.basicPay);
+                    sqlCommand.Parameters.AddWithValue("@department", emp.department);
+                    sqlCommand.Parameters.AddWithValue("@address", emp.address);
+                    sqlCommand.Parameters.AddWithValue("@PhoneNumber", emp.phoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@Deduction", emp.deductions);
+                    sqlCommand.Parameters.AddWithValue("@TaxablePay", emp.taxablePay);
+                    sqlCommand.Parameters.AddWithValue("@Tax", emp.tax);
+                    sqlCommand.Parameters.AddWithValue("@NetPay", emp.netPay);
+
+
+                    int result = sqlCommand.ExecuteNonQuery();
+                    if (result == 1)
+                        Console.WriteLine("Salary is updated...");
+                    else
+                        Console.WriteLine("Salary not updated!");
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }  
 }

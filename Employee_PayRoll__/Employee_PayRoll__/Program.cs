@@ -13,6 +13,7 @@ namespace Employee_PayRoll__
             Console.WriteLine("Sql database connectivity!");
             EmployeeRepo repo = new EmployeeRepo();
             repo.GetAllEmployee();
+            repo.UpdateEmployeeSalary();
             Console.ReadLine();
         }
     }
